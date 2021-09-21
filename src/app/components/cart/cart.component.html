@@ -1,1 +1,41 @@
-<p>cart works!</p>
+<app-header></app-header>
+
+<div class="cart-container">
+  <div class="cart-panel">
+    <div class="cart-item" *ngFor="let cartItem of productsInCart">
+      <img class="product-image" src="{{ cartItem.url }}" />
+      <div class="cart-item-details">
+        <p>
+          <strong>{{ cartItem.name }}</strong>
+        </p>
+        <p>${{ cartItem.price }}</p>
+        <div>
+          <label>Amount:</label>
+          <input
+            class="number-input"
+            type="number"
+            name="{{ cartItem.id }} "
+            value="{{ cartItem.quantity }}"
+            [(ngModel)]="cartItem.quantity"
+            (change)="consoleLog(cartItem)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cart-panel">
+    <form class="form-margin">
+      <p>Full Name</p>
+      <input type="text" name="fullName" required [(ngModel)]="fullName" />
+      <p>Address</p>
+      <input type="text" name="address" required [(ngModel)]="address" />
+      <p>Credit Card Number</p>
+      <input type="text" name="ccNum" required [(ngModel)]="ccNum" />
+      <br />
+
+      <button>Submit</button>
+    </form>
+  </div>
+</div>
+
+<div class=""></div>
