@@ -1,5 +1,7 @@
 <form class="product-container" (ngSubmit)="submitAddToCart(productItem)">
-  <img class="product-image" src="{{ productItem.url }}" />
+  <a routerLink="product/{{ productItem.id }}">
+    <img class="product-image" src="{{ productItem.url }}" />
+  </a>
 
   <p>{{ productItem.name }}</p>
   <p>{{ productItem.price }}</p>
@@ -14,5 +16,5 @@
     </option>
   </select>
 
-  <button type="submit">Submit</button>
+  <button type="submit">Add to cart</button>
 </form>
