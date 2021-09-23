@@ -10,9 +10,14 @@ export class CartService {
   constructor() {}
 
   addToCart(productItem: ProductItem) {
-    TODO: 'Add check to see if item is already in cart and update quantity';
-
-    this.productsInCart.push(productItem);
+    const cartProduct = this.productsInCart.find(
+      (item) => item.id == productItem.id
+    );
+    if (cartProduct?.quantity && productItem?.quantity) {
+      cartProduct.quantity += productItem.quantity;
+    } else {
+      this.productsInCart.push(productItem);
+    }
   }
 
   getCart() {
