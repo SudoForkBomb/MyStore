@@ -8,6 +8,10 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css'],
 })
+
+/**
+ * Product List Component that calls api and loads Product Components to page.
+ */
 export class ProductListComponent implements OnInit {
   productsOnPage: ProductItem[] = [];
 
@@ -17,6 +21,7 @@ export class ProductListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    //Retrieves Products and sets each product quantity to 1.
     this.productsService.getProducts().subscribe((res) => {
       for (let num = 0; num < res.length; num++) {
         const product = res[num];
@@ -27,6 +32,10 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  /**
+   * Adds item to cart. Calls the cartService method to add it.
+   * @param productItem - information of the product, includes the desired quantity.
+   */
   addToCart(productItem: ProductItem) {
     this.cartService.addToCart(productItem);
   }

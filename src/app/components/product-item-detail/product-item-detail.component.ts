@@ -9,6 +9,10 @@ import { ProductsService } from 'src/app/services/products.service';
   templateUrl: './product-item-detail.component.html',
   styleUrls: ['./product-item-detail.component.css'],
 })
+
+/**
+ * Item detail component loaded when user clicks on item component on main page.
+ */
 export class ProductItemDetailComponent implements OnInit {
   productItem!: ProductItem;
   quantity: any = 1;
@@ -22,6 +26,8 @@ export class ProductItemDetailComponent implements OnInit {
 
   ngOnInit(): void {
     try {
+      //Gets all the products, then filters off the item id to find the desired item.
+      //If this were a proper API call, we wouldn't filter off the whole list, but call the endpoint for one item.
       this.route.params.subscribe((params) => {
         this.productsService.getProducts().subscribe((res) => {
           this.productItem = res.find(
@@ -37,6 +43,10 @@ export class ProductItemDetailComponent implements OnInit {
     }
   }
 
+  /**
+   * Adds item to cart. Calls the cartService method to add it directly.
+   * @param item - information of the product, includes the desired quantity.
+   */
   submitAddToCart(item: ProductItem): void {
     item.quantity = this.quantity;
     this.cartService.addToCart(item);

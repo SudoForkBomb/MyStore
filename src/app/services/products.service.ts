@@ -6,6 +6,10 @@ import { ProductItem } from '../models/product-item';
 @Injectable({
   providedIn: 'root',
 })
+
+/**
+ * Product Service that handles endpoint calls to retrieve products.
+ */
 export class ProductsService {
   productItem!: ProductItem;
 
@@ -13,10 +17,18 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Fetches JSON of Product info
+   * @returns An observable for the ProductList to go through and convert to a ProductItem[]
+   */
   getProducts(): Observable<ProductItem[]> {
     return this.http.get<ProductItem[]>('../assets/data.json');
   }
 
+  /**
+   * Stores the products in a list for the other components to retrieve.
+   * @param productItemsList - List of products
+   */
   setProducts(productItemsList: ProductItem[]) {
     this.productItemsList = productItemsList;
   }
