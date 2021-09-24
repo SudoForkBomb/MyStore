@@ -13,13 +13,12 @@
     <img src="{{ productItem.url }}" />
     <div #elseBlock class="detail-item">
       <h1>{{ productItem.name }}</h1>
-      <p>{{ productItem.price }}</p>
+      <p>${{ productItem.price }}</p>
       <p>{{ productItem.description }}</p>
       <div>
         <select
           class="select-input"
           [(ngModel)]="quantity"
-          (change)="consoleLog(quantity)"
           name="{{ productItem.id }}"
         >
           <option *ngFor="let num of quantities" [ngValue]="num">

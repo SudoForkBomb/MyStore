@@ -22,11 +22,8 @@ export class ProductItemComponent implements OnInit {
     data.quantity = this.quantity;
     this.addToCart.emit(data);
     alert(
-      `${this.productItem.name} has been added to your cart. Quantity: ${this.productItem.quantity} `
+      `Added to your cart: ${this.productItem.quantity} x ${this.productItem.name}`
     );
     this.quantity = 1;
-  }
-  consoleLog(q: any) {
-    console.log(q);
   }
 }

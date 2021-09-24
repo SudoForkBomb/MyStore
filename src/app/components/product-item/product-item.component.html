@@ -4,11 +4,10 @@
   </a>
 
   <p>{{ productItem.name }}</p>
-  <p>{{ productItem.price }}</p>
+  <p>${{ productItem.price }}</p>
   <select
     class="select-input"
     [(ngModel)]="quantity"
-    (change)="consoleLog(quantity)"
     name="{{ productItem.id }}"
   >
     <option *ngFor="let num of quantities" [ngValue]="num">
