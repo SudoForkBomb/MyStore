@@ -1,46 +1,82 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ProductItem } from 'src/app/models/product-item';
+import { OrderInfo } from 'src/app/models/orderInfo';
 import { CartService } from 'src/app/services/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
+
+/**
+ * Component that handles the customer's shopping cart.
+ */
 export class CartComponent implements OnInit {
-  @Input() productsInCart: ProductItem[] = [
-    {
-      id: 1,
-      name: 'Book',
-      price: 9.99,
-      quantity: 1,
-      url: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      description: 'You can read it!',
-    },
-    {
-      id: 2,
-      name: 'Headphones',
-      price: 249.99,
-      quantity: 1,
-      url: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-      description: 'Listen to stuff!',
-    },
-  ];
+  @Input() productsInCart: ProductItem[] = [];
 
   fullName!: string;
   address!: string;
   ccNum!: string;
+  totalPrice: number = 0;
+  orderInfo!: OrderInfo;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit(): void {
-    // console.log('before', this.productsInCart);
-    // this.productsInCart = this.cartService.getCart();
-    // console.log('after', this.productsInCart);
-  }
-  consoleLog(q: any) {
-    console.log(q);
+    this.productsInCart = this.cartService.getCart();
+
+    for (let int = 0; int < this.productsInCart.length; int++) {
+      let quantity = this.productsInCart[int].quantity;
+      if (!quantity) {
+        quantity = 1;
+      }
+      this.totalPrice += this.productsInCart[int].price * quantity;
+    }
+    console.log(this.totalPrice);
   }
 
-  onSubmitOrder() {}
+  /**
+   * Updates the cart with the newly added item. If item is already in the cart, the quantity of the first instance will be updated instead.
+   * @param cartItem - the desired ProductItem to add
+   */
+  updateCart(cartItem: ProductItem) {
+    //Removes the cartItem if it's quantity goes to zero.
+    if (cartItem.quantity == 0) {
+      this.productsInCart = this.productsInCart.filter(
+        (item) => item.id != cartItem.id
+      );
+    }
+
+    //Allows the total price to update as the user changes it in the cart.
+    this.totalPrice = 0;
+    for (let int = 0; int < this.productsInCart.length; int++) {
+      let quantity = this.productsInCart[int].quantity;
+      if (!quantity) {
+        quantity = 1;
+      }
+      this.totalPrice += this.productsInCart[int].price * quantity;
+    }
+  }
+
+  /**
+   * Updates orderInfo in cartService and navigates to the confirmation page.
+   */
+  onSubmitOrder() {
+    const orderInfo: OrderInfo = {
+      fullName: this.fullName,
+      totalPrice: this.totalPrice,
+      ccNum: this.ccNum,
+    };
+
+    this.cartService.setOrderInfo(orderInfo);
+    this.router.navigate(['/confirmation']);
+
+    this.productsInCart = this.cartService.setCartToEmpty();
+    this.fullName = '';
+    this.address = '';
+    this.ccNum = '';
+    this.totalPrice = 0;
+  }
 }

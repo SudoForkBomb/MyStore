@@ -3,6 +3,10 @@ img {
   border-radius: 10px;
 }
 
+input {
+  width: 100%;
+}
+
 .form-margin {
   margin-bottom: 12px;
 }
