@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OrderInfo } from '../models/orderInfo';
 import { ProductItem } from '../models/product-item';
 
 @Injectable({
@@ -6,6 +7,7 @@ import { ProductItem } from '../models/product-item';
 })
 export class CartService {
   productsInCart: ProductItem[] = [];
+  orderInfo!: OrderInfo;
 
   constructor() {}
 
@@ -22,5 +24,18 @@ export class CartService {
 
   getCart() {
     return this.productsInCart;
+  }
+
+  setCartToEmpty(): ProductItem[] {
+    this.productsInCart = [];
+    return this.productsInCart;
+  }
+
+  setOrderInfo(orderInfo: OrderInfo) {
+    this.orderInfo = orderInfo;
+  }
+
+  getOrderInfo() {
+    return this.orderInfo;
   }
 }
