@@ -26,7 +26,7 @@
               value="{{ cartItem.quantity }}"
               min="0"
               [(ngModel)]="cartItem.quantity"
-              (change)="updateCart(cartItem)"
+              (ngModelChange)="updateCart(cartItem)"
             />
           </div>
         </div>
