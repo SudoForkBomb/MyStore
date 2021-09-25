@@ -44,11 +44,7 @@ export class CartComponent implements OnInit {
   updateCart(cartItem: ProductItem) {
     //Removes the cartItem if it's quantity goes to zero.
     if (cartItem.quantity == 0) {
-      this.productsInCart = this.productsInCart.filter(
-        (item) => item.id != cartItem.id
-      );
-      this.cartService.setCart(this.productsInCart);
-      alert(`${cartItem.name} has been removed from your cart.`);
+      this.removeFromCart(cartItem);
     }
 
     //Allows the total price to update as the user changes it in the cart.
@@ -60,6 +56,14 @@ export class CartComponent implements OnInit {
       }
       this.totalPrice += this.productsInCart[int].price * quantity;
     }
+  }
+
+  removeFromCart(cartItem: ProductItem) {
+    this.productsInCart = this.productsInCart.filter(
+      (item) => item.id != cartItem.id
+    );
+    this.cartService.setCart(this.productsInCart);
+    alert(`${cartItem.name} has been removed from your cart.`);
   }
 
   /**
