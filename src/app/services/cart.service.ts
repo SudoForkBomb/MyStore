@@ -42,6 +42,14 @@ export class CartService {
    * Empties a user's cart, generally after an order is submitted.
    * @returns the newly emptied cart.
    */
+  setCart(productsInCart: ProductItem[]) {
+    this.productsInCart = productsInCart;
+  }
+
+  /**
+   * Empties a user's cart, generally after an order is submitted.
+   * @returns the newly emptied cart.
+   */
   setCartToEmpty(): ProductItem[] {
     this.productsInCart = [];
     return this.productsInCart;

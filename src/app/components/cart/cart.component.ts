@@ -47,6 +47,8 @@ export class CartComponent implements OnInit {
       this.productsInCart = this.productsInCart.filter(
         (item) => item.id != cartItem.id
       );
+      this.cartService.setCart(this.productsInCart);
+      alert(`${cartItem.name} has been removed from your cart.`);
     }
 
     //Allows the total price to update as the user changes it in the cart.
